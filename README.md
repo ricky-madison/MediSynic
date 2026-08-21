@@ -1,24 +1,69 @@
-# Medisynic Sync Hub
+# Welcome to your Lovable project
 
-I have previosu created lovable project and synced it to github, but later I deleted the lovable project and kept github. can you create project and linked it to my already ready project: https://github.com/ricky-madison/medisynic
+## Project info
 
-This project was built with [Lovable](https://lovable.dev).
+**URL**: https://lovable.dev/projects/0ff29626-7bf7-489c-b168-344e15f1780f
 
-## Build with Lovable
+## How can I edit this code?
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/45f44469-3bd5-4d9e-a674-f1157e046ac1).
+There are several ways of editing your application.
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+**Use Lovable**
 
-## Development
+Simply visit the [Lovable Project](https://lovable.dev/projects/0ff29626-7bf7-489c-b168-344e15f1780f) and start prompting.
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+Changes made via Lovable will be committed automatically to this repo.
+
+**Use your preferred IDE**
+
+If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+
+The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+
+Follow these steps:
 
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
+# Step 1: Clone the repository using the project's Git URL.
+git clone <YOUR_GIT_URL>
+
+# Step 2: Navigate to the project directory.
+cd <YOUR_PROJECT_NAME>
+
+# Step 3: Install the necessary dependencies.
 npm i
+
+# Step 4: Start the development server with auto-reloading and an instant preview.
 npm run dev
 ```
+
+**Edit a file directly in GitHub**
+
+- Navigate to the desired file(s).
+- Click the "Edit" button (pencil icon) at the top right of the file view.
+- Make your changes and commit the changes.
+
+**Use GitHub Codespaces**
+
+- Navigate to the main page of your repository.
+- Click on the "Code" button (green button) near the top right.
+- Select the "Codespaces" tab.
+- Click on "New codespace" to launch a new Codespace environment.
+- Edit files directly within the Codespace and commit and push your changes once you're done.
+
+## What technologies are used for this project?
+
+This project is built with .
+
+- Vite
+- TypeScript
+- React
+- shadcn-ui
+- Tailwind CSS
+
+## How can I deploy this project?
+
+Simply open [Lovable](https://lovable.dev/projects/0ff29626-7bf7-489c-b168-344e15f1780f) and click on Share -> Publish.
+
+## I want to use a custom domain - is that possible?
+
+We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
