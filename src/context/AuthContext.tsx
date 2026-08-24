@@ -32,6 +32,47 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Demo account: bypasses the real backend entirely
+export const DEMO_EMAIL = 'demo@demo.com';
+export const DEMO_PASSWORD = 'demo@demo';
+const DEMO_STORAGE_KEY = 'medisynic-demo-session';
+
+const buildDemoSession = (): Session => {
+  const demoUser = {
+    id: '00000000-0000-4000-8000-000000000001',
+    aud: 'authenticated',
+    role: 'authenticated',
+    email: DEMO_EMAIL,
+    email_confirmed_at: new Date().toISOString(),
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    app_metadata: { provider: 'demo' },
+    user_metadata: {
+      first_name: 'John',
+      last_name: 'Doe',
+      full_name: 'John Doe',
+      demo: true,
+    },
+    identities: [],
+  } as unknown as User;
+
+  return {
+    access_token: 'demo-access-token',
+    refresh_token: 'demo-refresh-token',
+    token_type: 'bearer',
+    expires_in: 60 * 60 * 24 * 365,
+    expires_at: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 365,
+    user: demoUser,
+  } as unknown as Session;
+};
+
+const demoSubscription: SubscriptionInfo = {
+  id: 'demo-subscription',
+  subscribed: true,
+  tier: 'pro',
+  expiresAt: null,
+};
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Initialize with null values to ensure logged out state
   const [user, setUser] = useState<User | null>(null);
@@ -40,8 +81,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [subscription, setSubscription] = useState<SubscriptionInfo | null>(null);
   const { toast } = useToast();
 
+  const [isDemo, setIsDemo] = useState(false);
+
   // Initialize the auth state
   useEffect(() => {
+    // Restore demo session first (no backend calls needed)
+    if (typeof window !== 'undefined' && localStorage.getItem(DEMO_STORAGE_KEY) === 'true') {
+      const demoSession = buildDemoSession();
+      setIsDemo(true);
+      setSession(demoSession);
+      setUser(demoSession.user);
+      setSubscription(demoSubscription);
+      setLoading(false);
+      return;
+    }
+
     // Set up auth state listener first
     const { data: { subscription: authSubscription } } = supabase.auth.onAuthStateChange(
       (event, currentSession) => {
@@ -107,12 +161,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const refreshSubscription = async () => {
+    if (isDemo) {
+      setSubscription(demoSubscription);
+      return;
+    }
     if (user) {
       await fetchSubscription(user.id);
     }
   };
 
   const signIn = async (email: string, password: string) => {
+    // Demo credentials bypass the backend
+    if (email.trim().toLowerCase() === DEMO_EMAIL && password === DEMO_PASSWORD) {
+      const demoSession = buildDemoSession();
+      localStorage.setItem(DEMO_STORAGE_KEY, 'true');
+      setIsDemo(true);
+      setSession(demoSession);
+      setUser(demoSession.user);
+      setSubscription(demoSubscription);
+      setLoading(false);
+      toast({
+        title: 'Demo mode',
+        description: 'Signed in as John Doe (demo account).',
+      });
+      return;
+    }
+
     try {
       console.log("Attempting to sign in with email:", email);
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
@@ -181,6 +255,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signOut = async () => {
+    if (isDemo) {
+      localStorage.removeItem(DEMO_STORAGE_KEY);
+      setIsDemo(false);
+      setSession(null);
+      setUser(null);
+      setSubscription(null);
+      toast({ title: 'Signed out', description: 'Demo session ended.' });
+      return;
+    }
+
     try {
       const { error } = await supabase.auth.signOut();
       
