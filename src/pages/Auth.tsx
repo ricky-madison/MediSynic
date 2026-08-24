@@ -221,6 +221,20 @@ const Auth = () => {
                       >
                         {loginForm.formState.isSubmitting ? 'Signing in...' : 'Sign In'}
                       </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="w-full"
+                        onClick={async () => {
+                          await signIn(DEMO_EMAIL, DEMO_PASSWORD);
+                          navigate('/dashboard');
+                        }}
+                      >
+                        Continue with demo account (John Doe)
+                      </Button>
+                      <p className="text-xs text-center text-muted-foreground">
+                        Demo login: {DEMO_EMAIL} / {DEMO_PASSWORD}
+                      </p>
                     </form>
                   </Form>
                 ) : (
