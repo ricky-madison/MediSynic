@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth, DEMO_EMAIL, DEMO_PASSWORD } from '@/context/AuthContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import FadeIn from '@/components/FadeIn';
@@ -221,6 +221,20 @@ const Auth = () => {
                       >
                         {loginForm.formState.isSubmitting ? 'Signing in...' : 'Sign In'}
                       </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="w-full"
+                        onClick={async () => {
+                          await signIn(DEMO_EMAIL, DEMO_PASSWORD);
+                          navigate('/dashboard');
+                        }}
+                      >
+                        Continue with demo account (John Doe)
+                      </Button>
+                      <p className="text-xs text-center text-muted-foreground">
+                        Demo login: {DEMO_EMAIL} / {DEMO_PASSWORD}
+                      </p>
                     </form>
                   </Form>
                 ) : (
