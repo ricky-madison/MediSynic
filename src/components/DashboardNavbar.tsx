@@ -34,7 +34,7 @@ const DashboardNavbar: React.FC = () => {
 
   return (
     <div className="sticky top-0 z-30 w-full">
-      <div className="flex h-16 items-center px-4 border-b border-gray-200/70 dark:border-gray-700/40 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:bg-gray-900/80">
+      <div className="flex h-16 items-center px-4 border-b border-border bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/70">
         {/* Left side - Mobile menu toggle */}
         <div className="md:hidden">
           <Button variant="ghost" size="icon" onClick={toggleSidebar} className="text-gray-600 dark:text-gray-300">
