@@ -1,89 +1,154 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '@/components/Header';
-import { useAuth } from '@/context/AuthContext';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { AlertCircle } from 'lucide-react';
+import { ClipboardList } from 'lucide-react';
+import PageContainer from '@/components/layout/PageContainer';
+import PageHeader from '@/components/layout/PageHeader';
+import SectionCard from '@/components/layout/SectionCard';
+import ClinicalDisclaimer from '@/components/layout/ClinicalDisclaimer';
 import { Button } from '@/components/ui/button';
-import HealthAssessmentForm from '@/components/assessment/HealthAssessmentForm';
-import AssessmentHistory from '@/components/assessment/AssessmentHistory';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useToast } from '@/hooks/use-toast';
+import { useOncology, type OncoPatient } from '@/context/OncologyContext';
+import { CYCLE_PHASES, ECOG_SCALE, type CyclePhase } from '@/lib/oncology/cycle';
 
 const Form = () => {
-  const { isAuthenticated } = useAuth();
+  const { patient, updatePatient } = useOncology();
+  const { toast } = useToast();
   const navigate = useNavigate();
-  
+  const [draft, setDraft] = useState<OncoPatient>(patient);
+
+  const set = (patch: Partial<OncoPatient>) => setDraft((d) => ({ ...d, ...patch }));
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    updatePatient(draft);
+    toast({ title: 'Oncology profile saved', description: 'Surveillance thresholds have been recalculated.' });
+    navigate('/dashboard');
+  };
+
   return (
-    <div className="min-h-screen bg-background dark:bg-gray-900">
-      <Header />
-      
-      <main className="pt-16 pb-8">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
-              Comprehensive Health Assessment
-            </h1>
-            <p className="mt-2 text-lg text-gray-600 dark:text-gray-400">
-              Complete this detailed health assessment to receive personalized recommendations based on your comprehensive health profile
-            </p>
-            
-            {!isAuthenticated && (
-              <Card className="mt-6 border-amber-200 bg-amber-50/50 dark:bg-amber-900/20 dark:border-amber-800">
-                <CardContent className="p-4">
-                  <div className="flex items-start">
-                    <AlertCircle className="w-5 h-5 text-amber-500 mt-0.5 mr-3 flex-shrink-0" />
-                    <div>
-                      <h3 className="text-base font-medium text-amber-800 dark:text-amber-300 mb-1">Authentication Required</h3>
-                      <p className="text-sm text-amber-700 dark:text-amber-400 mb-3">
-                        You need to be logged in to save your assessment results and view your history.
-                      </p>
-                      <Button
-                        onClick={() => navigate('/auth')}
-                        className="text-sm px-4 py-2 h-9"
-                      >
-                        Sign In
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
+    <PageContainer>
+      <PageHeader
+        eyebrow="Onboarding"
+        title="Oncology intake"
+        description="Diagnosis, regimen and cycle position drive every threshold, recommendation and interaction check in MediSynic."
+      />
+
+      <form onSubmit={submit} className="space-y-6">
+        <SectionCard title="Patient" icon={ClipboardList}>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="space-y-1.5">
+              <Label htmlFor="name">Full name</Label>
+              <Input id="name" value={draft.name ?? ''} onChange={(e) => set({ name: e.target.value })} />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="age">Age</Label>
+              <Input id="age" type="number" value={draft.age ?? ''} onChange={(e) => set({ age: Number(e.target.value) })} />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="weight">Baseline weight (kg)</Label>
+              <Input
+                id="weight"
+                type="number"
+                step="any"
+                value={draft.baselineWeightKg ?? ''}
+                onChange={(e) => set({ baselineWeightKg: Number(e.target.value) })}
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="height">Height (cm)</Label>
+              <Input id="height" type="number" value={draft.heightCm ?? ''} onChange={(e) => set({ heightCm: Number(e.target.value) })} />
+            </div>
           </div>
-          
-          <div className="grid grid-cols-1 gap-8">
-            {/* Assessment Form Card - Takes full width now */}
-            <Card className="shadow-sm border bg-white/80 backdrop-blur-sm dark:bg-gray-800/90">
-              <CardHeader>
-                <CardTitle className="text-xl font-semibold text-indigo-700 dark:text-indigo-400">
-                  Complete Health Assessment
-                </CardTitle>
-                <CardDescription>
-                  Fill out the detailed health assessment below to receive personalized recommendations
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <HealthAssessmentForm />
-              </CardContent>
-            </Card>
-            
-            {/* Assessment History Card */}
-            <Card className="shadow-sm border bg-white/80 backdrop-blur-sm dark:bg-gray-800/90">
-              <CardHeader>
-                <CardTitle className="text-xl font-semibold text-indigo-700 dark:text-indigo-400">
-                  Assessment History
-                </CardTitle>
-                <CardDescription>
-                  Review your past assessments and track your health progress
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <AssessmentHistory />
-              </CardContent>
-            </Card>
+        </SectionCard>
+
+        <SectionCard title="Diagnosis & regimen">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="space-y-1.5">
+              <Label htmlFor="indication">Primary indication</Label>
+              <Input id="indication" value={draft.indication ?? ''} onChange={(e) => set({ indication: e.target.value })} placeholder="e.g. Non-small cell lung cancer" />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="stage">Stage</Label>
+              <Input id="stage" value={draft.stage ?? ''} onChange={(e) => set({ stage: e.target.value })} placeholder="e.g. IIIB" />
+            </div>
+            <div className="space-y-1.5 sm:col-span-2">
+              <Label htmlFor="regimen">Current regimen</Label>
+              <Input id="regimen" value={draft.regimen ?? ''} onChange={(e) => set({ regimen: e.target.value })} placeholder="e.g. Carboplatin + paclitaxel" />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="cycle">Cycle number</Label>
+              <Input id="cycle" type="number" min={1} value={draft.cycleNumber ?? ''} onChange={(e) => set({ cycleNumber: Number(e.target.value) })} />
+            </div>
+            <div className="space-y-1.5">
+              <Label>Cycle phase</Label>
+              <Select value={draft.cyclePhase ?? 'premedication'} onValueChange={(v) => set({ cyclePhase: v as CyclePhase })}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {CYCLE_PHASES.map((p) => (
+                    <SelectItem key={p.id} value={p.id}>
+                      {p.label} · {p.window}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
+        </SectionCard>
+
+        <SectionCard title="Functional status & steroids">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="space-y-1.5">
+              <Label>ECOG performance status</Label>
+              <Select value={String(draft.ecog ?? 0)} onValueChange={(v) => set({ ecog: Number(v) })}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {ECOG_SCALE.filter((e) => e.score < 5).map((e) => (
+                    <SelectItem key={e.score} value={String(e.score)}>
+                      {e.score} · {e.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="steroid">Steroid agent</Label>
+              <Input id="steroid" value={draft.steroidAgent ?? ''} onChange={(e) => set({ steroidAgent: e.target.value })} placeholder="e.g. Dexamethasone" />
+            </div>
+            <div className="flex items-center justify-between rounded-lg border border-border p-4 sm:col-span-2">
+              <div>
+                <p className="text-sm font-medium">Currently on corticosteroids</p>
+                <p className="text-caption">Activates the steroid hyperglycaemia curve in recommendations</p>
+              </div>
+              <Switch checked={!!draft.onSteroids} onCheckedChange={(v) => set({ onSteroids: v })} />
+            </div>
+            <div className="flex items-center justify-between rounded-lg border border-border p-4 sm:col-span-2">
+              <div>
+                <p className="text-sm font-medium">Cell or gene therapy patient</p>
+                <p className="text-caption">Enables CRS and ICANS surveillance modules</p>
+              </div>
+              <Switch checked={!!draft.cellTherapy} onCheckedChange={(v) => set({ cellTherapy: v })} />
+            </div>
+          </div>
+        </SectionCard>
+
+        <div className="flex justify-end gap-2">
+          <Button type="button" variant="outline" onClick={() => navigate('/dashboard')}>
+            Cancel
+          </Button>
+          <Button type="submit">Save profile</Button>
         </div>
-      </main>
-    </div>
+      </form>
+
+      <ClinicalDisclaimer />
+    </PageContainer>
   );
 };
 

@@ -76,7 +76,17 @@ const CellTherapy = () => {
         <MetricTile label="CRP" value={latestCrs?.crp ?? '—'} unit="mg/L" icon={Activity} tone={(latestCrs?.crp ?? 0) >= CRS_THRESHOLDS.crpWatch ? 'warning' : 'success'} hint={`Escalate ≥ ${CRS_THRESHOLDS.crpEscalation}`} />
         <MetricTile label="Ferritin" value={latestCrs?.ferritin ?? '—'} unit="ng/mL" icon={Activity} tone={(latestCrs?.ferritin ?? 0) >= CRS_THRESHOLDS.ferritinWatch ? 'warning' : 'success'} hint={`Watch ≥ ${CRS_THRESHOLDS.ferritinWatch}`} />
         <MetricTile label="IL-6" value={latestCrs?.il6 ?? '—'} unit="pg/mL" icon={Thermometer} tone={(latestCrs?.il6 ?? 0) >= CRS_THRESHOLDS.il6Escalation ? 'danger' : 'success'} hint={`Escalate ≥ ${CRS_THRESHOLDS.il6Escalation}`} />
-        <MetricTile label="Latest ICE score" value={latestIce ? Object.values({ ...latestIce, id: 0, date: 0 }).length && latestIce.orientation + latestIce.naming + latestIce.commands + latestIce.writing + latestIce.attention : '—'} unit={`/ ${ICE_THRESHOLDS.maxScore}`} icon={Brain} hint="10 = normal neurocognition" />
+        <MetricTile
+          label="Latest ICE score"
+          value={
+            latestIce
+              ? latestIce.orientation + latestIce.naming + latestIce.commands + latestIce.writing + latestIce.attention
+              : '—'
+          }
+          unit={`/ ${ICE_THRESHOLDS.maxScore}`}
+          icon={Brain}
+          hint="10 = normal neurocognition"
+        />
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
