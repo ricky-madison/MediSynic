@@ -168,6 +168,70 @@
   .grid-cards {
     @apply grid gap-4 sm:grid-cols-2 lg:grid-cols-4;
   }
+
+  /* ---- Compatibility aliases: all legacy card/button classes resolve to the
+     single unified language above so no page can drift visually. ---- */
+  .card-glass,
+  .glass-card,
+  .premium-card,
+  .premium-stat-card {
+    @apply rounded-xl border border-border bg-card text-card-foreground shadow-sm p-5 transition-shadow duration-200;
+  }
+  .card-glass:hover,
+  .glass-card:hover,
+  .premium-card:hover,
+  .premium-stat-card:hover {
+    @apply shadow-md;
+  }
+
+  .form-input {
+    @apply w-full rounded-lg border border-input bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/25 transition-colors;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-primary text-primary-foreground px-5 py-2.5 text-sm font-medium shadow-sm transition-colors hover:bg-primary/90 disabled:opacity-60 disabled:pointer-events-none;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-secondary text-secondary-foreground px-5 py-2.5 text-sm font-medium transition-colors hover:bg-secondary/80 disabled:opacity-60 disabled:pointer-events-none;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+  .chip-blue {
+    @apply bg-accent text-accent-foreground;
+  }
+  .chip-green {
+    @apply bg-primary/10 text-primary;
+  }
+
+  .stat-title {
+    @apply text-sm font-medium text-muted-foreground;
+  }
+  .stat-value {
+    @apply text-2xl font-semibold tabular-nums text-foreground mt-1;
+  }
+  .stat-desc {
+    @apply text-xs text-muted-foreground mt-1;
+  }
+  .dashboard-section-title {
+    @apply text-lg font-semibold tracking-tight text-foreground flex items-center mb-4;
+  }
+  .section {
+    @apply py-12 md:py-16;
+  }
+  .container-tight {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6;
+  }
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
 }
 
 @layer utilities {
