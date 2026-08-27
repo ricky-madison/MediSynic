@@ -28,14 +28,8 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   
   // Only show header on non-dashboard pages
-  const isDashboardPage = location.pathname.includes('/dashboard') || 
-                          location.pathname.includes('/form') ||
-                          location.pathname.includes('/recommendations') ||
-                          location.pathname.includes('/ai-pharmacist') ||
-                          location.pathname.includes('/caregiver') ||
-                          location.pathname.includes('/health-data') ||
-                          location.pathname.includes('/symptom-checker') ||
-                          location.pathname.includes('/user-data');
+  const appRoutes = ['/dashboard', '/form', '/recommendations', '/metabolic', '/toxicity', '/medications', '/markers', '/oncyra', '/cell-therapy', '/caregiver', '/user-data', '/privacy-policy', '/security-report', '/subscribe'];
+  const isDashboardPage = appRoutes.some((r) => location.pathname.startsWith(r));
                           
   if (isDashboardPage && isAuthenticated) return null;
 
@@ -61,15 +55,15 @@ const Header: React.FC = () => {
       className={cn(
         'fixed inset-x-0 top-0 z-50 transition-all backdrop-blur-sm',
         isScrolled
-          ? 'py-2 bg-white/90 dark:bg-gray-900/90 shadow-sm'
+          ? 'py-2 bg-background/90 border-b border-border shadow-sm'
           : 'py-4 bg-transparent'
       )}
     >
       <div className="container-tight mx-auto flex items-center">
         {/* Logo with gradient */}
-        <Link to="/" className="flex-shrink-0 text-2xl font-bold text-medical-gray-900">
-          <span className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">Medi</span>
-          <span className="text-medical-gray-900 dark:text-white">Synic</span>
+        <Link to="/" className="flex-shrink-0 text-2xl font-semibold tracking-tight">
+          <span className="text-primary">Medi</span>
+          <span className="text-foreground">Synic</span>
         </Link>
 
         {/* Centered nav (desktop) */}
@@ -78,10 +72,10 @@ const Header: React.FC = () => {
           <NavLink to="/about" icon={<HelpCircle size={18} />}>About</NavLink>
           {isAuthenticated && (
             <>
-              <NavLink to="/form" icon={<FileText size={18} />}>Assessment</NavLink>
+              <NavLink to="/form" icon={<FileText size={18} />}>Intake</NavLink>
               <NavLink to="/dashboard" icon={<User size={18} />}>Dashboard</NavLink>
-              <NavLink to="/recommendations" icon={<Heart size={18} />}>Recs</NavLink>
-              <NavLink to="/ai-pharmacist" icon={<Pill size={18} />}>Medications</NavLink>
+              <NavLink to="/recommendations" icon={<Heart size={18} />}>Care actions</NavLink>
+              <NavLink to="/medications" icon={<Pill size={18} />}>Medications</NavLink>
             </>
           )}
         </nav>
@@ -92,12 +86,12 @@ const Header: React.FC = () => {
             <div className="relative">
               <button
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                className="flex items-center space-x-2 rounded-full bg-medical-gray-100 px-4 py-2 hover:bg-medical-gray-200 transition"
+                className="flex items-center space-x-2 rounded-full bg-muted px-4 py-2 hover:bg-muted/70 transition"
               >
-                <div className="w-8 h-8 rounded-full bg-medical-blue-light flex items-center justify-center text-white">
+                <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white">
                   {user?.email?.charAt(0).toUpperCase() || 'U'}
                 </div>
-                <span className="font-medium text-medical-gray-800">{user?.email}</span>
+                <span className="font-medium text-foreground">{user?.email}</span>
                 <ChevronDown size={16} />
               </button>
               {isUserMenuOpen && (
@@ -114,7 +108,7 @@ const Header: React.FC = () => {
 
         {/* Mobile menu toggle */}
         <button
-          className="md:hidden ml-auto text-medical-gray-800 dark:text-gray-200"
+          className="md:hidden ml-auto text-foreground"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -187,7 +181,7 @@ const MobileNavLink: React.FC<NavLinkProps> = ({ to, exact, icon, children }) =>
         'flex items-center space-x-2 text-xl py-2 transition',
         isActive
           ? 'text-medical-blue dark:text-blue-400'
-          : 'text-medical-gray-800 dark:text-gray-200 hover:text-medical-blue dark:hover:text-blue-400'
+          : 'text-foreground hover:text-medical-blue dark:hover:text-blue-400'
       )}
     >
       {icon && <span>{icon}</span>}
@@ -204,19 +198,19 @@ interface UserMenuProps {
 const UserMenu: React.FC<UserMenuProps> = ({ onLogout }) => (
   <div className="absolute right-0 mt-2 w-64 rounded-lg bg-white dark:bg-gray-800 shadow-lg py-2 z-50 animate-fade-in">
     <div className="py-2">
-      <Link to="/dashboard" className="flex items-center px-4 py-2 hover:bg-medical-gray-100 dark:hover:bg-gray-700">
+      <Link to="/dashboard" className="flex items-center px-4 py-2 hover:bg-muted dark:hover:bg-gray-700">
         <User size={16} className="mr-2 text-medical-gray-700 dark:text-gray-200" />
         Dashboard
       </Link>
-      <Link to="/form" className="flex items-center px-4 py-2 hover:bg-medical-gray-100 dark:hover:bg-gray-700">
+      <Link to="/form" className="flex items-center px-4 py-2 hover:bg-muted dark:hover:bg-gray-700">
         <FileText size={16} className="mr-2 text-medical-gray-700 dark:text-gray-200" />
         Update Profile
       </Link>
-      <Link to="/recommendations" className="flex items-center px-4 py-2 hover:bg-medical-gray-100 dark:hover:bg-gray-700">
+      <Link to="/recommendations" className="flex items-center px-4 py-2 hover:bg-muted dark:hover:bg-gray-700">
         <Heart size={16} className="mr-2 text-medical-gray-700 dark:text-gray-200" />
         Recommendations
       </Link>
-      <Link to="/ai-pharmacist" className="flex items-center px-4 py-2 hover:bg-medical-gray-100 dark:hover:bg-gray-700">
+      <Link to="/ai-pharmacist" className="flex items-center px-4 py-2 hover:bg-muted dark:hover:bg-gray-700">
         <Pill size={16} className="mr-2 text-medical-gray-700 dark:text-gray-200" />
         Medications
       </Link>
@@ -224,7 +218,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ onLogout }) => (
     <div className="border-t border-gray-100 dark:border-gray-700 py-2">
       <button
         onClick={onLogout}
-        className="flex w-full items-center px-4 py-2 text-red-600 dark:text-red-400 hover:bg-medical-gray-100 dark:hover:bg-gray-700"
+        className="flex w-full items-center px-4 py-2 text-red-600 dark:text-red-400 hover:bg-muted dark:hover:bg-gray-700"
       >
         <ExternalLink size={16} className="mr-2" />
         Log Out
@@ -258,7 +252,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isAuthenticated, email, onLogou
             
             <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
               <div className="flex items-center mb-4">
-                <div className="w-10 h-10 rounded-full bg-medical-blue-light flex items-center justify-center text-white mr-3">
+                <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white mr-3">
                   {email.charAt(0).toUpperCase() || 'U'}
                 </div>
                 <div>

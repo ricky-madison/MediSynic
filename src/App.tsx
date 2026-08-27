@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation, Navigate, Outlet } from "react-router-dom";
 import { UserDataProvider } from "./context/UserDataContext";
+import { OncologyProvider } from "./context/OncologyContext";
 import { SidebarProvider } from "./components/ui/sidebar";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import DataConsentBanner from "./components/DataConsentBanner";
@@ -26,15 +27,16 @@ const queryClient = new QueryClient({
 const Index = lazy(() => import("./pages/Index"));
 const Form = lazy(() => import("./pages/Form"));
 const About = lazy(() => import("./pages/About"));
-const Dashboard = lazy(() => import("./pages/Dashboard"));
 const DashboardHome = lazy(() => import("./pages/DashboardHome"));
-const EnhancedDashboard = lazy(() => import("./pages/EnhancedDashboard"));
 const Recommendations = lazy(() => import("./pages/Recommendations"));
-const AIPharmacist = lazy(() => import("./pages/AIPharmacist"));
+const MetabolicMonitor = lazy(() => import("./pages/MetabolicMonitor"));
+const ToxicityTracker = lazy(() => import("./pages/ToxicityTracker"));
+const MedicationSafety = lazy(() => import("./pages/MedicationSafety"));
+const TumorMarkers = lazy(() => import("./pages/TumorMarkers"));
+const OncyraImportPage = lazy(() => import("./pages/OncyraImport"));
+const CellTherapy = lazy(() => import("./pages/CellTherapy"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const CaregiverIntegration = lazy(() => import("./pages/CaregiverIntegration"));
-const HealthDataLogging = lazy(() => import("./pages/HealthDataLogging"));
-const AISymptomChecker = lazy(() => import("./pages/AISymptomChecker"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const SecurityReport = lazy(() => import("./pages/SecurityReport"));
 const UserData = lazy(() => import("./pages/UserData"));
@@ -100,7 +102,7 @@ const AppRoutes = () => {
   const { isAuthenticated } = useAuth();
   
   // Define routes where the CTA should not appear
-  const excludedRoutes = ['/form', '/dashboard', '/auth', '/subscribe', '/enhanced-dashboard'];
+  const excludedRoutes = ['/form', '/dashboard', '/auth', '/subscribe', '/metabolic', '/toxicity', '/medications', '/markers', '/oncyra', '/cell-therapy', '/recommendations'];
   const shouldShowCTA = !excludedRoutes.some(route => location.pathname.startsWith(route)) && !isAuthenticated;
   
   return (
@@ -118,15 +120,22 @@ const AppRoutes = () => {
               <DashboardLayout />
             </ProtectedRoute>
           }>
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard" element={<DashboardHome />} />
             <Route path="/dashboard/home" element={<DashboardHome />} />
-            <Route path="/enhanced-dashboard" element={<EnhancedDashboard />} />
             <Route path="/form" element={<Form />} />
             <Route path="/recommendations" element={<Recommendations />} />
-            <Route path="/ai-pharmacist" element={<AIPharmacist />} />
+            <Route path="/metabolic" element={<MetabolicMonitor />} />
+            <Route path="/toxicity" element={<ToxicityTracker />} />
+            <Route path="/medications" element={<MedicationSafety />} />
+            <Route path="/markers" element={<TumorMarkers />} />
+            <Route path="/oncyra" element={<OncyraImportPage />} />
+            <Route path="/cell-therapy" element={<CellTherapy />} />
             <Route path="/caregiver" element={<CaregiverIntegration />} />
-            <Route path="/health-data" element={<HealthDataLogging />} />
-            <Route path="/symptom-checker" element={<AISymptomChecker />} />
+            {/* Legacy routes */}
+            <Route path="/health-data" element={<Navigate to="/metabolic" replace />} />
+            <Route path="/ai-pharmacist" element={<Navigate to="/medications" replace />} />
+            <Route path="/symptom-checker" element={<Navigate to="/toxicity" replace />} />
+            <Route path="/enhanced-dashboard" element={<Navigate to="/dashboard" replace />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/security-report" element={<SecurityReport />} />
             <Route path="/user-data" element={<UserData />} />
@@ -149,6 +158,7 @@ const App = () => (
     <TooltipProvider>
       <AuthProvider>
         <UserDataProvider>
+          <OncologyProvider>
           <SidebarProvider>
             <Toaster />
             <Sonner />
@@ -156,6 +166,7 @@ const App = () => (
               <AppRoutes />
             </BrowserRouter>
           </SidebarProvider>
+          </OncologyProvider>
         </UserDataProvider>
       </AuthProvider>
     </TooltipProvider>
