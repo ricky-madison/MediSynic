@@ -105,7 +105,7 @@ const AppSidebar = () => {
         <div className="relative flex h-16 items-center justify-between border-b border-border p-4">
           <Link to="/" className="mx-auto flex-shrink-0 text-xl font-semibold tracking-tight md:mx-0">
             <span className="text-primary">Medi</span>
-            <span className="text-foreground">Synic</span>
+            <span className="text-sidebar-foreground">Synic</span>
           </Link>
           <SidebarTrigger className="absolute right-[-12px] top-1/2 z-30 -translate-y-1/2 rounded-full border border-border bg-background">
             {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
