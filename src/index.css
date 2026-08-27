@@ -1,5 +1,4 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,66 +6,118 @@
 
 @layer base {
   :root {
-    --background: 210 33% 99%;
-    --foreground: 222 47% 12%;
+    /* Clinical slate canvas */
+    --background: 200 24% 97%;
+    --foreground: 200 28% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 12%;
+    --card-foreground: 200 28% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 12%;
+    --popover-foreground: 200 28% 12%;
 
-    /* Royal Indigo */
-    --primary: 250 87% 67%;
-    --primary-foreground: 210 40% 98%;
+    /* Deep clinical teal */
+    --primary: 187 72% 26%;
+    --primary-foreground: 180 40% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 195 30% 94%;
+    --secondary-foreground: 200 30% 20%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 214 24% 47%;
+    --muted: 200 24% 94%;
+    --muted-foreground: 205 14% 42%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 174 58% 92%;
+    --accent-foreground: 187 72% 22%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 72% 45%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 250 87% 67%;
+    --border: 205 22% 89%;
+    --input: 205 22% 89%;
+    --ring: 187 72% 30%;
 
-    --radius: 1rem;
+    --radius: 0.75rem;
+
+    /* CTCAE / clinical severity scale */
+    --grade-0: 160 60% 38%;
+    --grade-1: 150 55% 40%;
+    --grade-2: 42 92% 46%;
+    --grade-3: 25 92% 50%;
+    --grade-4: 6 78% 50%;
+    --grade-5: 348 70% 38%;
+
+    --success: 158 58% 36%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 46%;
+    --warning-foreground: 30 60% 12%;
+    --info: 205 75% 40%;
+    --info-foreground: 0 0% 100%;
+
+    /* Chart palette */
+    --chart-1: 187 72% 32%;
+    --chart-2: 172 58% 42%;
+    --chart-3: 205 72% 45%;
+    --chart-4: 38 88% 50%;
+    --chart-5: 348 62% 48%;
+
+    --sidebar-background: 199 34% 13%;
+    --sidebar-foreground: 195 22% 84%;
+    --sidebar-primary: 174 62% 45%;
+    --sidebar-primary-foreground: 199 40% 10%;
+    --sidebar-accent: 199 32% 19%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 199 28% 22%;
+    --sidebar-ring: 174 62% 45%;
   }
 
   .dark {
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
+    --background: 200 30% 8%;
+    --foreground: 195 22% 92%;
 
-    --card: 222 47% 11%;
-    --card-foreground: 210 40% 98%;
+    --card: 200 28% 11%;
+    --card-foreground: 195 22% 92%;
 
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 200 28% 11%;
+    --popover-foreground: 195 22% 92%;
 
-    --primary: 250 87% 67%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 174 62% 42%;
+    --primary-foreground: 200 30% 8%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 200 22% 17%;
+    --secondary-foreground: 195 22% 92%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 200 22% 16%;
+    --muted-foreground: 200 12% 63%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 199 32% 19%;
+    --accent-foreground: 174 62% 60%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 62% 46%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 250 87% 67%;
+    --border: 200 20% 20%;
+    --input: 200 20% 20%;
+    --ring: 174 62% 42%;
+
+    --grade-0: 160 45% 45%;
+    --grade-1: 150 45% 48%;
+    --grade-2: 42 80% 52%;
+    --grade-3: 25 82% 56%;
+    --grade-4: 6 70% 56%;
+    --grade-5: 348 60% 50%;
+
+    --success: 158 48% 44%;
+    --warning: 38 82% 54%;
+    --info: 205 65% 52%;
+
+    --sidebar-background: 200 32% 10%;
+    --sidebar-foreground: 195 20% 82%;
+    --sidebar-primary: 174 62% 45%;
+    --sidebar-primary-foreground: 200 32% 10%;
+    --sidebar-accent: 200 26% 16%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 200 24% 19%;
+    --sidebar-ring: 174 62% 45%;
   }
 
   * {
@@ -74,116 +125,120 @@
   }
 
   html {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', system-ui, sans-serif;
     scroll-behavior: smooth;
   }
-  
+
   body {
     @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "tnum";
   }
 }
 
 @layer components {
-  .card-glass {
-    @apply bg-white/90 dark:bg-gray-800/80 rounded-xl shadow-md backdrop-blur-sm border border-gray-100/80 dark:border-gray-700/80 p-5 transition-all duration-300;
+  /* ---- Typography scale ---- */
+  .text-page-title {
+    @apply text-2xl md:text-3xl font-semibold tracking-tight text-foreground;
   }
-  
-  .card-glass:hover {
-    @apply shadow-lg;
+  .text-section-title {
+    @apply text-lg font-semibold tracking-tight text-foreground;
   }
-  
-  .glass-card {
-    @apply bg-white/90 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl border border-gray-100 dark:border-gray-700 p-5 shadow-md transition-all duration-300;
+  .text-caption {
+    @apply text-xs text-muted-foreground;
   }
-  
+  .text-metric {
+    @apply text-3xl font-semibold tracking-tight tabular-nums text-foreground;
+  }
+
+  /* ---- Single card language ---- */
+  .surface-card {
+    @apply rounded-xl border border-border bg-card text-card-foreground shadow-sm;
+  }
+  .surface-muted {
+    @apply rounded-xl border border-border bg-muted/50;
+  }
+
+  /* ---- Layout rhythm ---- */
+  .stack-lg {
+    @apply space-y-6;
+  }
+  .stack-md {
+    @apply space-y-4;
+  }
+  .grid-cards {
+    @apply grid gap-4 sm:grid-cols-2 lg:grid-cols-4;
+  }
+
+  /* ---- Compatibility aliases: all legacy card/button classes resolve to the
+     single unified language above so no page can drift visually. ---- */
+  .card-glass,
+  .glass-card,
+  .premium-card,
+  .premium-stat-card {
+    @apply rounded-xl border border-border bg-card text-card-foreground shadow-sm p-5 transition-shadow duration-200;
+  }
+  .card-glass:hover,
+  .glass-card:hover,
+  .premium-card:hover,
+  .premium-stat-card:hover {
+    @apply shadow-md;
+  }
+
   .form-input {
-    @apply w-full rounded-xl border border-gray-300 bg-white px-4 py-3 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all duration-300;
+    @apply w-full rounded-lg border border-input bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/25 transition-colors;
   }
 
   .btn-primary {
-    @apply bg-indigo-600 text-white px-6 py-3 rounded-xl font-medium shadow-sm transition-all duration-300 hover:bg-indigo-700 hover:shadow-md active:scale-[0.98] disabled:opacity-70 disabled:pointer-events-none;
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-primary text-primary-foreground px-5 py-2.5 text-sm font-medium shadow-sm transition-colors hover:bg-primary/90 disabled:opacity-60 disabled:pointer-events-none;
   }
-  
+
   .btn-secondary {
-    @apply bg-gray-100 text-gray-700 px-6 py-3 rounded-xl font-medium transition-all duration-300 hover:bg-gray-200 active:scale-[0.98] disabled:opacity-70 disabled:pointer-events-none;
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-secondary text-secondary-foreground px-5 py-2.5 text-sm font-medium transition-colors hover:bg-secondary/80 disabled:opacity-60 disabled:pointer-events-none;
   }
 
   .chip {
-    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium transition-all duration-300;
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
   }
-  
   .chip-blue {
-    @apply bg-blue-100 text-blue-700;
+    @apply bg-accent text-accent-foreground;
   }
-  
   .chip-green {
-    @apply bg-green-100 text-green-700;
+    @apply bg-primary/10 text-primary;
   }
-  
+
+  .stat-title {
+    @apply text-sm font-medium text-muted-foreground;
+  }
+  .stat-value {
+    @apply text-2xl font-semibold tabular-nums text-foreground mt-1;
+  }
+  .stat-desc {
+    @apply text-xs text-muted-foreground mt-1;
+  }
+  .dashboard-section-title {
+    @apply text-lg font-semibold tracking-tight text-foreground flex items-center mb-4;
+  }
   .section {
-    @apply py-12 md:py-20;
+    @apply py-12 md:py-16;
   }
-  
   .container-tight {
-    @apply container max-w-6xl mx-auto px-4 sm:px-6;
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6;
   }
-  
-  .page-transition-enter {
-    @apply opacity-0;
-  }
-  
-  .page-transition-enter-active {
-    @apply opacity-100 transition-opacity duration-300;
-  }
-  
-  .page-transition-exit {
-    @apply opacity-100;
-  }
-  
-  .page-transition-exit-active {
-    @apply opacity-0 transition-opacity duration-300;
-  }
-  
-  @keyframes float {
-    0% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-    100% {
-      transform: translateY(0px);
-    }
-  }
-  
   .animate-float {
     animation: float 6s ease-in-out infinite;
   }
 
-  /* Premium dashboard components */
-  .premium-card {
-    @apply rounded-xl bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border border-gray-200/80 dark:border-gray-700/80 shadow-sm hover:shadow-md transition-all duration-300;
-  }
-
-  .premium-stat-card {
-    @apply flex flex-col p-5 rounded-xl bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border border-gray-200/80 dark:border-gray-700/80 shadow-sm hover:shadow-md transition-all duration-300;
-  }
-
-  .stat-title {
-    @apply text-sm font-medium text-gray-600 dark:text-gray-400;
-  }
-
-  .stat-value {
-    @apply text-2xl font-semibold text-gray-900 dark:text-white mt-1;
-  }
-
-  .stat-desc {
-    @apply text-xs text-gray-600 dark:text-gray-400 mt-1;
-  }
-
-  .dashboard-section-title {
-    @apply text-lg font-semibold text-indigo-700 dark:text-indigo-400 flex items-center mb-4;
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
   }
 }
 
-
+@layer utilities {
+  .grade-0 { color: hsl(var(--grade-0)); }
+  .grade-1 { color: hsl(var(--grade-1)); }
+  .grade-2 { color: hsl(var(--grade-2)); }
+  .grade-3 { color: hsl(var(--grade-3)); }
+  .grade-4 { color: hsl(var(--grade-4)); }
+  .grade-5 { color: hsl(var(--grade-5)); }
+}
