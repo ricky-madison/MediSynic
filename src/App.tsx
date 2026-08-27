@@ -119,15 +119,22 @@ const AppRoutes = () => {
               <DashboardLayout />
             </ProtectedRoute>
           }>
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard" element={<DashboardHome />} />
             <Route path="/dashboard/home" element={<DashboardHome />} />
-            <Route path="/enhanced-dashboard" element={<EnhancedDashboard />} />
             <Route path="/form" element={<Form />} />
             <Route path="/recommendations" element={<Recommendations />} />
-            <Route path="/ai-pharmacist" element={<AIPharmacist />} />
+            <Route path="/metabolic" element={<MetabolicMonitor />} />
+            <Route path="/toxicity" element={<ToxicityTracker />} />
+            <Route path="/medications" element={<MedicationSafety />} />
+            <Route path="/markers" element={<TumorMarkers />} />
+            <Route path="/oncyra" element={<OncyraImportPage />} />
+            <Route path="/cell-therapy" element={<CellTherapy />} />
             <Route path="/caregiver" element={<CaregiverIntegration />} />
-            <Route path="/health-data" element={<HealthDataLogging />} />
-            <Route path="/symptom-checker" element={<AISymptomChecker />} />
+            {/* Legacy routes */}
+            <Route path="/health-data" element={<Navigate to="/metabolic" replace />} />
+            <Route path="/ai-pharmacist" element={<Navigate to="/medications" replace />} />
+            <Route path="/symptom-checker" element={<Navigate to="/toxicity" replace />} />
+            <Route path="/enhanced-dashboard" element={<Navigate to="/dashboard" replace />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/security-report" element={<SecurityReport />} />
             <Route path="/user-data" element={<UserData />} />
