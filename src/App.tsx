@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation, Navigate, Outlet } from "react-router-dom";
 import { UserDataProvider } from "./context/UserDataContext";
+import { OncologyProvider } from "./context/OncologyContext";
 import { SidebarProvider } from "./components/ui/sidebar";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import DataConsentBanner from "./components/DataConsentBanner";
@@ -101,7 +102,7 @@ const AppRoutes = () => {
   const { isAuthenticated } = useAuth();
   
   // Define routes where the CTA should not appear
-  const excludedRoutes = ['/form', '/dashboard', '/auth', '/subscribe', '/enhanced-dashboard'];
+  const excludedRoutes = ['/form', '/dashboard', '/auth', '/subscribe', '/metabolic', '/toxicity', '/medications', '/markers', '/oncyra', '/cell-therapy', '/recommendations'];
   const shouldShowCTA = !excludedRoutes.some(route => location.pathname.startsWith(route)) && !isAuthenticated;
   
   return (
@@ -157,6 +158,7 @@ const App = () => (
     <TooltipProvider>
       <AuthProvider>
         <UserDataProvider>
+          <OncologyProvider>
           <SidebarProvider>
             <Toaster />
             <Sonner />
@@ -164,6 +166,7 @@ const App = () => (
               <AppRoutes />
             </BrowserRouter>
           </SidebarProvider>
+          </OncologyProvider>
         </UserDataProvider>
       </AuthProvider>
     </TooltipProvider>
