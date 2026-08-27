@@ -1,403 +1,182 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
-import HeroSection from '@/components/HeroSection';
 import Footer from '@/components/Footer';
 import FadeIn from '@/components/FadeIn';
-import { useNavigate } from 'react-router-dom';
-import { useUserData } from '@/context/UserDataContext';
-import PricingTeaser from '@/components/PricingTeaser';
-import { 
-  Activity, 
-  Users, 
-  FileText, 
-  Heart, 
-  ChevronRight,
-  Brain,
-  Stethoscope,
-  Pill,
-  ArrowRight,
-  Shield,
-  Lock,
-  CheckCircle,
-  LogIn
-} from 'lucide-react';
+import ClinicalDisclaimer from '@/components/layout/ClinicalDisclaimer';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/context/AuthContext';
+import {
+  Activity,
+  AlertCircle,
+  ArrowRight,
+  Beaker,
+  Brain,
+  Dna,
+  HeartPulse,
+  Pill,
+  ShieldCheck,
+  Utensils,
+} from 'lucide-react';
+
+const pillars = [
+  {
+    icon: Activity,
+    title: 'Onco-metabolic surveillance',
+    body: 'Steroid-induced hyperglycaemia, cachexia and hydration tracked against auditable thresholds through every cycle phase.',
+  },
+  {
+    icon: AlertCircle,
+    title: 'CTCAE v5.0 toxicity grading',
+    body: 'Patients grade side effects the way the clinic does, with escalation triggers per term and an ECOG performance trend.',
+  },
+  {
+    icon: Pill,
+    title: 'Oncology interaction engine',
+    body: 'CYP450-aware screening across cytotoxics, TKIs, steroids, supportive care and p53 rescue compounds.',
+  },
+  {
+    icon: Beaker,
+    title: 'Markers & liquid biopsy',
+    body: 'CEA, CA 19-9, CA 125, PSA, AFP, LDH and ctDNA VAF trended between scans with rise alerts.',
+  },
+  {
+    icon: Dna,
+    title: 'Mutation-aware from Oncyra',
+    body: 'Import a TP53 rescue prediction and MediSynic reweights metabolic risk domains and surveillance intensity.',
+  },
+  {
+    icon: Brain,
+    title: 'CRS & ICANS monitoring',
+    body: 'CRP, ferritin, IL-6 and the 10-point ICE assessment for CAR-T and gene-editing patients.',
+  },
+];
+
+const tiers = [
+  {
+    tag: 'Tier 1',
+    title: 'Onco-metabolic & cachexia',
+    body: 'Chemotherapy-induced hyperglycaemia, high-protein anti-cachexia nutrition and nephrotoxicity-preventing hydration.',
+    icon: Utensils,
+  },
+  {
+    tag: 'Tier 2',
+    title: 'Precision oncology companion',
+    body: 'ECOG, CTCAE grading, oncology DDI screening and tumour-marker response tracking alongside Oncyra predictions.',
+    icon: HeartPulse,
+  },
+  {
+    tag: 'Tier 3',
+    title: 'Gene therapy surveillance',
+    body: 'CRS and ICANS dashboards, off-target signal tracking and an Oncetra ECG/HRV link for cardiac safety.',
+    icon: Dna,
+  },
+];
 
 const Index = () => {
   const navigate = useNavigate();
-  const { userData } = useUserData();
   const { isAuthenticated } = useAuth();
-  const hasUserData = isAuthenticated && Object.keys(userData).length > 0 && userData.name;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 dark:from-gray-900 dark:to-gray-800 flex flex-col">
+    <div className="flex min-h-screen flex-col bg-background">
       <Header />
-      
+
       <main className="flex-grow">
-        {/* If user has data, show a welcome back banner */}
-        {hasUserData && (
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/30 dark:to-purple-900/30 border-b border-blue-100 dark:border-blue-900/50 backdrop-blur-sm">
-            <div className="container-tight py-4">
-              <div className="flex flex-col sm:flex-row items-center justify-between">
-                <div className="flex items-center mb-3 sm:mb-0">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center mr-4 text-white shadow-lg">
-                    <span className="text-lg font-bold">{userData.name?.charAt(0)}</span>
-                  </div>
-                  <div>
-                    <h2 className="text-xl font-medium text-gray-900 dark:text-white">Welcome back, {userData.name}!</h2>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Continue with your health journey</p>
-                  </div>
-                </div>
-                <Button
-                  onClick={() => navigate('/dashboard')}
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-md"
-                >
-                  Go to Dashboard <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-          </div>
-        )}
-        
-        <HeroSection />
-        
-        {/* Sign In CTA for non-authenticated users */}
-        {!isAuthenticated && (
-          <section className="py-10 bg-blue-50 dark:bg-blue-900/20">
-            <div className="container-tight">
-              <FadeIn delay={100} className="text-center mb-6">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 text-sm font-medium mb-4">
-                  <LogIn size={16} className="text-blue-600 dark:text-blue-400" /> 
-                  Account Required
-                </div>
-                <h2 className="text-2xl md:text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
-                  Sign In to Access All Features
-                </h2>
-                <p className="text-lg text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
-                  Create an account or sign in to unlock all diabetes management features and personalized recommendations.
-                </p>
-                <Button 
-                  onClick={() => navigate('/auth')}
-                  size="lg"
-                  className="mt-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-md"
-                >
-                  Sign In / Sign Up
-                </Button>
-              </FadeIn>
-            </div>
-          </section>
-        )}
-        
-        {/* Pricing Teaser Section - Added right after hero section */}
-        <section className="bg-white dark:bg-gray-900 py-16">
-          <PricingTeaser />
-        </section>
-        
-        {/* How It Works Section */}
-        <section className="py-20 bg-white dark:bg-gray-900" id="how-it-works">
-          <div className="container-tight">
-            <FadeIn delay={100} className="text-center mb-16">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 text-sm font-medium mb-4">
-                <CheckCircle size={16} className="text-blue-600 dark:text-blue-400" /> 
-                Simple Process
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
-                How MediSynic Works
-              </h2>
-              <p className="text-lg text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
-                Our intelligent system analyzes your personal data to generate tailored medical recommendations in just a few steps.
+        <section className="border-b border-border bg-gradient-to-b from-primary/5 to-background">
+          <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-28">
+            <FadeIn>
+              <p className="text-xs font-semibold uppercase tracking-widest text-primary">
+                Precision oncology and gene-therapy surveillance
               </p>
-            </FadeIn>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <FadeIn delay={200} className="relative">
-                <div className="glass-card text-center p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 h-full">
-                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/40 dark:to-blue-800/40 flex items-center justify-center mx-auto mb-6 shadow-md">
-                    <FileText size={32} className="text-blue-600 dark:text-blue-400" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">1. Submit Your Data</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-6">
-                    Fill out our comprehensive form with your personal and medical information. Your data is protected with enterprise-grade encryption.
-                  </p>
-                  <Button variant="link" onClick={() => navigate('/form')} className="text-blue-600 dark:text-blue-400 font-medium">
-                    Start Assessment <ArrowRight className="ml-1 h-4 w-4" />
-                  </Button>
-                </div>
-                <div className="hidden md:block absolute -right-4 top-1/2 transform -translate-y-1/2 z-10">
-                  <ChevronRight size={24} className="text-gray-400 dark:text-gray-600" />
-                </div>
-              </FadeIn>
-              
-              <FadeIn delay={300} className="relative">
-                <div className="glass-card text-center p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 h-full">
-                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-100 to-purple-200 dark:from-purple-900/40 dark:to-purple-800/40 flex items-center justify-center mx-auto mb-6 shadow-md">
-                    <Brain size={32} className="text-purple-600 dark:text-purple-400" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">2. AI Analysis</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-6">
-                    Our system analyzes your data using advanced algorithms and clinical knowledge, identifying patterns that matter for your health.
-                  </p>
-                  <Button variant="link" onClick={() => navigate('/recommendations')} className="text-purple-600 dark:text-purple-400 font-medium">
-                    See How It Works <ArrowRight className="ml-1 h-4 w-4" />
-                  </Button>
-                </div>
-                <div className="hidden md:block absolute -right-4 top-1/2 transform -translate-y-1/2 z-10">
-                  <ChevronRight size={24} className="text-gray-400 dark:text-gray-600" />
-                </div>
-              </FadeIn>
-              
-              <FadeIn delay={400}>
-                <div className="glass-card text-center p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 h-full">
-                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-green-100 to-green-200 dark:from-green-900/40 dark:to-green-800/40 flex items-center justify-center mx-auto mb-6 shadow-md">
-                    <Heart size={32} className="text-green-600 dark:text-green-400" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">3. Get Recommendations</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-6">
-                    Receive personalized health recommendations based on your unique profile, with actionable insights for better health outcomes.
-                  </p>
-                  <Button variant="link" onClick={() => navigate('/dashboard')} className="text-green-600 dark:text-green-400 font-medium">
-                    View Dashboard <ArrowRight className="ml-1 h-4 w-4" />
-                  </Button>
-                </div>
-              </FadeIn>
-            </div>
-            
-            <FadeIn delay={500} className="text-center mt-16">
-              <Button 
-                onClick={() => navigate('/form')}
-                size="lg"
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-md px-8 py-6 text-lg"
-              >
-                Start Your Health Journey
-              </Button>
+              <h1 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-foreground md:text-5xl">
+                Between-visit monitoring for patients on chemotherapy, immunotherapy and cell therapy
+              </h1>
+              <p className="mt-5 max-w-2xl text-lg text-muted-foreground">
+                MediSynic turns the days between clinic appointments into structured clinical signal: CTCAE-graded
+                toxicity, metabolic and cachexia trends, interaction screening and TP53 mutation-aware risk modelling.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Button size="lg" onClick={() => navigate(isAuthenticated ? '/dashboard' : '/auth')}>
+                  {isAuthenticated ? 'Open dashboard' : 'Start monitoring'} <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+                <Button size="lg" variant="outline" asChild>
+                  <Link to="/about">How it works</Link>
+                </Button>
+              </div>
+              <p className="mt-6 flex items-center gap-2 text-sm text-muted-foreground">
+                <ShieldCheck className="h-4 w-4 text-success" /> HIPAA and GDPR-aligned data governance · decision
+                support only
+              </p>
             </FadeIn>
           </div>
         </section>
-        
-        {/* Features Section */}
-        <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-blue-900/30">
-          <div className="container-tight">
-            <FadeIn delay={100} className="text-center mb-16">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 text-sm font-medium mb-4">
-                <CheckCircle size={16} className="text-green-600 dark:text-green-400" /> 
-                Comprehensive Analysis
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-600 dark:from-blue-400 dark:to-green-400">
-                Key Features
-              </h2>
-              <p className="text-lg text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
-                Our platform offers comprehensive health analysis through multiple factors to provide you with a complete picture of your health.
+
+        <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+          <FadeIn>
+            <h2 className="text-3xl font-semibold tracking-tight">Six surveillance modules, one record</h2>
+            <p className="mt-3 max-w-2xl text-muted-foreground">
+              Every module writes to the same longitudinal record, so a toxicity grade, a glucose reading and a marker
+              rise are interpreted together.
+            </p>
+          </FadeIn>
+          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {pillars.map((p, i) => (
+              <FadeIn key={p.title} delay={i * 60}>
+                <article className="surface-card h-full p-6">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <p.icon className="h-5 w-5" aria-hidden />
+                  </span>
+                  <h3 className="mt-4 text-base font-semibold">{p.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{p.body}</p>
+                </article>
+              </FadeIn>
+            ))}
+          </div>
+        </section>
+
+        <section className="border-y border-border bg-muted/30">
+          <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+            <FadeIn>
+              <h2 className="text-3xl font-semibold tracking-tight">Built for the Oncyra and Oncetra ecosystem</h2>
+              <p className="mt-3 max-w-2xl text-muted-foreground">
+                Oncyra predicts which compound rescues a mutant p53. Oncetra watches the heart. MediSynic is the
+                longitudinal patient layer that connects prediction to lived response.
               </p>
             </FadeIn>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <FadeIn delay={200}>
-                <div className="glass-card hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                  <div className="flex items-start">
-                    <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/40 dark:to-blue-800/40 flex items-center justify-center mr-6 flex-shrink-0 shadow-md">
-                      <Activity size={28} className="text-blue-600 dark:text-blue-400" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Health Metrics Analysis</h3>
-                      <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                        Comprehensive analysis of your weight, height, BMI, and other vital health metrics to identify potential health risks and opportunities for improvement.
-                      </p>
-                      <Button 
-                        variant="link" 
-                        className="p-0 h-auto mt-4 text-blue-600 dark:text-blue-400 font-medium"
-                        onClick={() => navigate('/dashboard?tab=metrics')}
-                      >
-                        Track your metrics <ArrowRight className="ml-1 h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </FadeIn>
-              
-              <FadeIn delay={300}>
-                <div className="glass-card hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                  <div className="flex items-start">
-                    <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-purple-100 to-purple-200 dark:from-purple-900/40 dark:to-purple-800/40 flex items-center justify-center mr-6 flex-shrink-0 shadow-md">
-                      <Users size={28} className="text-purple-600 dark:text-purple-400" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Lifestyle Evaluation</h3>
-                      <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                        Assessment of your work habits, sleep patterns, and stress levels to provide holistic health recommendations tailored to your unique lifestyle.
-                      </p>
-                      <Button 
-                        variant="link" 
-                        className="p-0 h-auto mt-4 text-purple-600 dark:text-purple-400 font-medium"
-                        onClick={() => navigate('/recommendations')}
-                      >
-                        Get lifestyle insights <ArrowRight className="ml-1 h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </FadeIn>
-              
-              <FadeIn delay={400}>
-                <div className="glass-card hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                  <div className="flex items-start">
-                    <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-amber-100 to-amber-200 dark:from-amber-900/40 dark:to-amber-800/40 flex items-center justify-center mr-6 flex-shrink-0 shadow-md">
-                      <Pill size={28} className="text-amber-600 dark:text-amber-400" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Medication Interaction</h3>
-                      <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                        Review of your current medications to identify potential interactions and optimize your treatment plan for better efficacy and reduced side effects.
-                      </p>
-                      <Button 
-                        variant="link" 
-                        className="p-0 h-auto mt-4 text-amber-600 dark:text-amber-400 font-medium"
-                        onClick={() => navigate('/dashboard?tab=medications')}
-                      >
-                        Manage medications <ArrowRight className="ml-1 h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </FadeIn>
-              
-              <FadeIn delay={500}>
-                <div className="glass-card hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                  <div className="flex items-start">
-                    <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-green-100 to-green-200 dark:from-green-900/40 dark:to-green-800/40 flex items-center justify-center mr-6 flex-shrink-0 shadow-md">
-                      <Stethoscope size={28} className="text-green-600 dark:text-green-400" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">AI Pharmacist</h3>
-                      <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                        Get personalized answers to your medication and health questions from our AI-powered pharmacist, backed by the latest medical research.
-                      </p>
-                      <Button 
-                        variant="link" 
-                        className="p-0 h-auto mt-4 text-green-600 dark:text-green-400 font-medium"
-                        onClick={() => navigate('/ai-pharmacist')}
-                      >
-                        Ask AI Pharmacist <ArrowRight className="ml-1 h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </FadeIn>
+            <div className="mt-10 grid gap-5 md:grid-cols-3">
+              {tiers.map((t, i) => (
+                <FadeIn key={t.tag} delay={i * 80}>
+                  <article className="surface-card h-full p-6">
+                    <p className="text-xs font-semibold uppercase tracking-widest text-primary">{t.tag}</p>
+                    <h3 className="mt-2 flex items-center gap-2 text-base font-semibold">
+                      <t.icon className="h-4 w-4 text-primary" aria-hidden />
+                      {t.title}
+                    </h3>
+                    <p className="mt-2 text-sm text-muted-foreground">{t.body}</p>
+                  </article>
+                </FadeIn>
+              ))}
             </div>
           </div>
         </section>
-        
-        {/* Security Section */}
-        <section className="py-16 bg-white dark:bg-gray-900">
-          <div className="container-tight">
-            <FadeIn delay={100} className="text-center mb-12">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 text-sm font-medium mb-4">
-                <Lock size={16} className="text-blue-600 dark:text-blue-400" /> 
-                HIPAA & GDPR Compliant
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
-                Your Data Privacy & Security
-              </h2>
-              <p className="text-lg text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
-                We take your privacy seriously with enterprise-grade security measures and full compliance with healthcare regulations.
+
+        <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+          <div className="surface-card flex flex-col items-start gap-5 p-8 md:flex-row md:items-center md:justify-between">
+            <div>
+              <h2 className="text-2xl font-semibold tracking-tight">See it with a demo patient</h2>
+              <p className="mt-2 max-w-xl text-muted-foreground">
+                Explore a stage IIIB NSCLC patient in cycle 3 nadir with steroid hyperglycaemia, grade 2 fatigue and a
+                rising CEA.
               </p>
-            </FadeIn>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <FadeIn delay={200}>
-                <div className="glass-card text-center p-6 hover:shadow-lg transition-all duration-300">
-                  <div className="w-16 h-16 mx-auto rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mb-4">
-                    <Lock size={28} className="text-blue-600 dark:text-blue-400" />
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">End-to-End Encryption</h3>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm">
-                    Your health data is encrypted both in transit and at rest using industry-leading security protocols.
-                  </p>
-                </div>
-              </FadeIn>
-              
-              <FadeIn delay={300}>
-                <div className="glass-card text-center p-6 hover:shadow-lg transition-all duration-300">
-                  <div className="w-16 h-16 mx-auto rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mb-4">
-                    <Shield size={28} className="text-purple-600 dark:text-purple-400" />
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Regulatory Compliance</h3>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm">
-                    Our platform is fully HIPAA and GDPR compliant, adhering to the highest standards of data protection.
-                  </p>
-                </div>
-              </FadeIn>
-              
-              <FadeIn delay={400}>
-                <div className="glass-card text-center p-6 hover:shadow-lg transition-all duration-300">
-                  <div className="w-16 h-16 mx-auto rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-4">
-                    <Users size={28} className="text-green-600 dark:text-green-400" />
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">User Consent Control</h3>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm">
-                    You maintain full control over your data with granular consent options and the ability to delete your information anytime.
-                  </p>
-                </div>
-              </FadeIn>
             </div>
-            
-            <FadeIn delay={500} className="text-center mt-10">
-              <Button 
-                variant="outline"
-                onClick={() => navigate('/privacy-policy')}
-                className="border-blue-200 dark:border-blue-800 text-gray-700 dark:text-gray-300"
-              >
-                Learn More About Our Privacy Policy
-              </Button>
-            </FadeIn>
+            <Button size="lg" onClick={() => navigate('/auth')}>
+              Open demo account <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
           </div>
-        </section>
-        
-        {/* CTA Section - Updated to show login CTA for non-authenticated users */}
-        <section className="py-20 bg-gradient-to-br from-blue-500 to-purple-600 dark:from-blue-800 dark:to-purple-900 text-white">
-          <div className="container-tight">
-            <FadeIn delay={100} className="text-center">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
-                Ready to Transform Your Health Journey?
-              </h2>
-              <p className="text-lg text-blue-100 max-w-3xl mx-auto mb-10">
-                Take the first step towards a healthier lifestyle with personalized recommendations tailored just for your unique needs.
-              </p>
-              {!isAuthenticated ? (
-                <Button 
-                  onClick={() => navigate('/auth')}
-                  size="lg"
-                  className="bg-white text-blue-600 hover:bg-blue-50 shadow-lg px-8 py-6 text-lg font-medium"
-                >
-                  Sign In / Sign Up
-                </Button>
-              ) : (
-                <Button 
-                  onClick={() => navigate('/form')}
-                  size="lg"
-                  className="bg-white text-blue-600 hover:bg-blue-50 shadow-lg px-8 py-6 text-lg font-medium"
-                >
-                  Get Started Now
-                </Button>
-              )}
-              
-              {hasUserData && (
-                <div className="mt-6">
-                  <Button 
-                    variant="outline"
-                    onClick={() => navigate('/dashboard')}
-                    className="text-white border-white/30 hover:bg-white/10"
-                  >
-                    Continue to your dashboard <ArrowRight className="ml-1 h-4 w-4" />
-                  </Button>
-                </div>
-              )}
-            </FadeIn>
-          </div>
+          <ClinicalDisclaimer className="mt-6" />
         </section>
       </main>
-      
-      {/* Footer - Using the Footer component instead of inline footer */}
+
       <Footer />
     </div>
   );
