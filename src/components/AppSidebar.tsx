@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
@@ -15,243 +14,148 @@ import {
   SidebarTrigger,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { useUserData } from '@/context/UserDataContext';
 import { useAuth } from '@/context/AuthContext';
+import { useOncology } from '@/context/OncologyContext';
 import SubscriptionBadge from './SubscriptionBadge';
 import {
-  LayoutDashboard,
-  FileText,
-  Heart,
-  Pill,
-  Stethoscope,
-  Home,
-  User,
   Activity,
-  Brain,
-  LogOut,
-  Users,
-  BarChart2,
-  Lock,
-  Shield,
   AlertCircle,
-  LogIn,
-  Crown,
+  Beaker,
+  Brain,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  ClipboardList,
+  Dna,
+  LayoutDashboard,
+  Lock,
+  LogIn,
+  LogOut,
+  Pill,
+  Shield,
+  Sparkles,
+  Users,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
+interface NavItem {
+  icon: React.ElementType;
+  label: string;
+  to: string;
+  requiresPro?: boolean;
+}
+
 const AppSidebar = () => {
-  const { userData, resetData } = useUserData();
   const { user, isAuthenticated, signOut, isPro } = useAuth();
+  const { patient } = useOncology();
   const location = useLocation();
-  const hasUserData = Object.keys(userData).length > 0 && userData.name;
   const { state } = useSidebar();
-  const isCollapsed = state === "collapsed";
-  
-  // Navigation items
-  const baseNavItems = [
-    { icon: Home, label: 'Home', to: '/dashboard/home' },
-    { icon: FileText, label: 'Assessment', to: '/form' },
+  const isCollapsed = state === 'collapsed';
+
+  const overview: NavItem[] = [
+    { icon: LayoutDashboard, label: 'Overview', to: '/dashboard/home' },
+    { icon: ClipboardList, label: 'Oncology intake', to: '/form' },
+    { icon: Sparkles, label: 'Care actions', to: '/recommendations' },
   ];
 
-  const userNavItems = [
-    { icon: Heart, label: 'Recommendations', to: '/recommendations' },
-    { icon: Pill, label: 'Medications', to: '/ai-pharmacist' }, // Renamed from "AI Pharmacist" to "Medications" but keeping the same route
-    { icon: Brain, label: 'Symptom Checker', to: '/symptom-checker', requiresPro: true },
-    { icon: BarChart2, label: 'Health Data', to: '/health-data' },
-    { icon: Users, label: 'Caregiver', to: '/caregiver', requiresPro: true },
-  ];
-  
-  const securityItems = [
-    { icon: Shield, label: 'Privacy Policy', to: '/privacy-policy' },
-    { icon: AlertCircle, label: 'Security Report', to: '/security-report' },
-    { icon: Lock, label: 'Manage Your Data', to: '/user-data' },
+  const surveillance: NavItem[] = [
+    { icon: Activity, label: 'Metabolic monitor', to: '/metabolic' },
+    { icon: AlertCircle, label: 'Toxicity (CTCAE)', to: '/toxicity' },
+    { icon: Pill, label: 'Medication safety', to: '/medications' },
+    { icon: Beaker, label: 'Tumour markers', to: '/markers' },
   ];
 
-  // Handle logout
-  const handleLogout = async () => {
-    await signOut();
-    resetData();
-  };
-  
+  const precision: NavItem[] = [
+    { icon: Dna, label: 'Oncyra import', to: '/oncyra' },
+    { icon: Brain, label: 'CRS & ICANS', to: '/cell-therapy' },
+    { icon: Users, label: 'Care circle', to: '/caregiver', requiresPro: true },
+  ];
+
+  const governance: NavItem[] = [
+    { icon: Shield, label: 'Privacy policy', to: '/privacy-policy' },
+    { icon: AlertCircle, label: 'Security report', to: '/security-report' },
+    { icon: Lock, label: 'Manage your data', to: '/user-data' },
+  ];
+
+  const renderGroup = (label: string, items: NavItem[]) => (
+    <SidebarGroup key={label}>
+      <SidebarGroupLabel>{label}</SidebarGroupLabel>
+      <SidebarGroupContent>
+        <SidebarMenu>
+          {items.map((item) => {
+            const locked = item.requiresPro && !isPro;
+            return (
+              <SidebarMenuItem key={item.to}>
+                <SidebarMenuButton asChild isActive={location.pathname === item.to} tooltip={item.label}>
+                  <Link to={locked ? '/subscribe' : item.to} className="flex justify-center md:justify-start">
+                    <item.icon size={18} />
+                    <span>{item.label}</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            );
+          })}
+        </SidebarMenu>
+      </SidebarGroupContent>
+    </SidebarGroup>
+  );
+
   return (
     <Sidebar className="pt-0 h-screen" collapsible="icon">
       <SidebarHeader className="pt-0">
-        <div className="flex items-center justify-between p-4 border-b border-border/40 h-16 relative">
-          <Link to="/" className="flex-shrink-0 text-xl font-bold text-medical-gray-900 mx-auto md:mx-0">
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">Medi</span>
-            <span className="text-medical-gray-900 dark:text-white">Synic</span>
+        <div className="relative flex h-16 items-center justify-between border-b border-border p-4">
+          <Link to="/" className="mx-auto flex-shrink-0 text-xl font-semibold tracking-tight md:mx-0">
+            <span className="text-primary">Medi</span>
+            <span className="text-foreground">Synic</span>
           </Link>
-          
-          <SidebarTrigger className="absolute right-[-12px] top-1/2 -translate-y-1/2 z-30 bg-background border border-border/40 rounded-full">
-            {isCollapsed ? 
-              <ChevronRight className="h-4 w-4" /> : 
-              <ChevronLeft className="h-4 w-4" />
-            }
+          <SidebarTrigger className="absolute right-[-12px] top-1/2 z-30 -translate-y-1/2 rounded-full border border-border bg-background">
+            {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
           </SidebarTrigger>
         </div>
-      </SidebarHeader>
-      
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {baseNavItems.map((item) => (
-                <SidebarMenuItem key={item.label}>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={location.pathname === item.to}
-                    tooltip={item.label}
-                  >
-                    <Link to={item.to} className="flex justify-center md:justify-start">
-                      <item.icon size={18} />
-                      <span>{item.label}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-              {!isAuthenticated && (
-                <SidebarMenuItem>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={location.pathname === '/auth'}
-                    tooltip="Sign In/Up"
-                  >
-                    <Link to="/auth" className="flex justify-center md:justify-start">
-                      <LogIn size={18} />
-                      <span>Sign In/Up</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              )}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-        
-        {/* Health Management Section */}
-        {(hasUserData || isAuthenticated) && (
-          <SidebarGroup>
-            <SidebarGroupLabel>Health Management</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {userNavItems.map((item) => {
-                  const isPremiumFeature = item.requiresPro && !isPro;
-                  
-                  return (
-                    <SidebarMenuItem key={item.label}>
-                      <SidebarMenuButton 
-                        asChild 
-                        isActive={
-                          location.pathname === item.to ||
-                          (item.to.includes('?tab=') && location.search.includes(item.to.split('?tab=')[1]))
-                        }
-                        tooltip={isPremiumFeature ? "Pro Feature" : item.label}
-                        disabled={isPremiumFeature}
-                      >
-                        <Link to={isPremiumFeature ? "/subscribe" : item.to} className="flex justify-center md:justify-start relative">
-                          <item.icon size={18} />
-                          <span>{item.label}</span>
-                          {isPremiumFeature && (
-                            <Crown size={12} className="absolute top-0 right-0 text-amber-500" />
-                          )}
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  );
-                })}
-                
-                {isAuthenticated && (
-                  <SidebarMenuItem>
-                    <SidebarMenuButton
-                      asChild
-                      isActive={location.pathname === '/subscribe'}
-                      tooltip="Subscription"
-                    >
-                      <Link to="/subscribe" className="flex justify-center md:justify-start">
-                        <Crown size={18} />
-                        <span>Subscription</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                )}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
+        {!isCollapsed && patient.indication && (
+          <p className="px-4 pb-2 pt-3 text-xs text-muted-foreground">
+            {patient.indication}
+            {patient.stage ? ` · Stage ${patient.stage}` : ''}
+          </p>
         )}
-        
-        <SidebarGroup>
-          <SidebarGroupLabel>Security & Privacy</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {securityItems.map((item) => (
-                <SidebarMenuItem key={item.label}>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={location.pathname === item.to}
-                    tooltip={item.label}
-                  >
-                    <Link to={item.to} className="flex justify-center md:justify-start">
-                      <item.icon size={18} />
-                      <span>{item.label}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+      </SidebarHeader>
+
+      <SidebarContent>
+        {renderGroup('Overview', overview)}
+        {renderGroup('Surveillance', surveillance)}
+        {renderGroup('Precision oncology', precision)}
+        {renderGroup('Governance', governance)}
       </SidebarContent>
-      
-      <SidebarFooter className="border-t border-border/40">
+
+      <SidebarFooter className="border-t border-border">
         {isAuthenticated ? (
           <div className={`p-3 ${isCollapsed ? 'text-center' : ''}`}>
-            <div className={`${isCollapsed ? 'justify-center' : 'justify-between'} flex items-center mb-2`}>
+            <div className={`mb-2 flex items-center ${isCollapsed ? 'justify-center' : 'justify-between'}`}>
               <div className={`flex ${isCollapsed ? 'flex-col' : 'items-center space-x-2'}`}>
-                <div className="w-8 h-8 rounded-full bg-medical-blue-light flex items-center justify-center text-white mb-1">
+                <div className="mb-1 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
                   {user?.email?.charAt(0).toUpperCase() || 'U'}
                 </div>
                 {!isCollapsed && (
                   <div className="flex flex-col">
-                    <span className="font-medium text-sm text-medical-gray-900 dark:text-white truncate max-w-[120px]">
-                      {user?.email}
-                    </span>
-                    <SubscriptionBadge className="mt-1 py-0.5 px-1.5" />
+                    <span className="max-w-[120px] truncate text-sm font-medium">{user?.email}</span>
+                    <SubscriptionBadge className="mt-1 px-1.5 py-0.5" />
                   </div>
                 )}
               </div>
             </div>
-            
-            <div className="flex justify-center">
-              {isCollapsed ? (
-                <Button 
-                  variant="outline"
-                  size="icon"
-                  className="w-8 h-8 text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300"
-                  onClick={handleLogout}
-                >
-                  <LogOut size={14} />
-                </Button>
-              ) : (
-                <Button 
-                  variant="outline"
-                  className="w-full justify-start text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300"
-                  onClick={handleLogout}
-                >
-                  <LogOut size={16} className="mr-2" />
-                  Sign Out
-                </Button>
-              )}
-            </div>
+            <Button
+              variant="outline"
+              size={isCollapsed ? 'icon' : 'default'}
+              className={isCollapsed ? 'h-8 w-8' : 'w-full justify-start'}
+              onClick={() => signOut()}
+            >
+              <LogOut size={16} className={isCollapsed ? '' : 'mr-2'} />
+              {!isCollapsed && 'Sign out'}
+            </Button>
           </div>
         ) : (
-          <div className="p-3 flex justify-center">
-            <Button 
-              className={`${isCollapsed ? 'w-8 h-8 p-0' : 'w-full'}`}
-              onClick={() => window.location.href = '/auth'}
-            >
-              {isCollapsed ? <LogIn size={14} /> : 'Sign In'}
+          <div className="flex justify-center p-3">
+            <Button className={isCollapsed ? 'h-8 w-8 p-0' : 'w-full'} asChild>
+              <Link to="/auth">{isCollapsed ? <LogIn size={14} /> : 'Sign in'}</Link>
             </Button>
           </div>
         )}
