@@ -2,96 +2,109 @@
 
 **Home** | **About** | **Sign In** | **HIPAA & GDPR Compliant**
 
-## Your Diabetes Management Companion
-MediSynic delivers personalized diabetes insights with medical-grade precision. Our advanced AI analyzes your unique profile to provide tailored guidance for optimal glucose management.
+## Precision Oncology & Gene-Therapy Surveillance
+MediSynic delivers between-visit monitoring for patients on chemotherapy, immunotherapy, and cell therapy. Our advanced AI analyzes CTCAE-graded toxicity, metabolic trends, drug interactions, and mutation-aware risk modeling to provide structured clinical signals.
 
-[Start Your Diabetes Journey](#) | [Learn More](#)
+[Open Dashboard](#) | [How It Works](#)
 
 ### Key Features
-*   Glucose Tracking
-*   A1C Management
-*   Diet Guidance
-*   Complication Prevention
-*   Diabetes Score
+*   CTCAE v5.0 Toxicity Grading
+*   Onco-Metabolic Surveillance
+*   Drug Interaction Engine
+*   Tumor Markers & Liquid Biopsy
+*   Mutation-Aware Risk Modeling
+*   CRS & ICANS Monitoring
 
 ## Premium
 
-**7.1%**
-Estimated A1C
+**Grade 2**
+Current Toxicity Level
 
 **-0.3%**
 Recommendations
-*   Walk after meals (10 minutes)
-*   Hydration (Drink more water)
+*   Increase hydration monitoring
+*   Review steroid dosing
+*   Schedule marker re-test in 7 days
 
 ### Account Required
 Sign In to Access All Features
 
-Create an account or sign in to unlock all diabetes management features and personalized recommendations.
+Create an account or sign in to unlock all oncology surveillance features and personalized clinical recommendations.
 
 [Sign In / Sign Up](#)
 
-## Take Your Diabetes Management to the Next Level
+## Take Your Oncology Surveillance to the Next Level
 
-### Free Plan
-**$0/month**
-*   ✓ Basic diabetes profile
-*   ✓ Limited health recommendations
-*   ✓ Basic medication tracking
+### Tier 1
+**Included with basic surveillance**
+*   ✓ Onco-metabolic & cachexia tracking
+*   ✓ Chemotherapy-induced hyperglycemia monitoring
+*   ✓ High-protein anti-cachexia nutrition support
+*   ✓ Nephrotoxicity-preventing hydration protocols
 [Get Started](#)
 
-### Recommended: Pro Plan
+### Recommended: Tier 2
 **$9.99/month**
 (Annual plan)
-*   ✓ Advanced diabetes-specific recommendations
-*   ✓ Blood glucose pattern analysis
-*   ✓ Medication interaction alerts
-*   ✓ Meal plan suggestions
-*   ✓ Export health reports
+*   ✓ ECOG and CTCAE grading
+*   ✓ Oncology DDI (drug-drug interaction) screening
+*   ✓ Tumor-marker response tracking
+*   ✓ Oncyra prediction import for TP53 mutations
+*   ✓ Export clinical reports
 [Start Free Trial](#)
 
 ## Simple Process: How MediSynic Works
-Our intelligent system analyzes your personal data to generate tailored medical recommendations in just a few steps.
+Our intelligent system analyzes patient data to generate tailored clinical recommendations in just a few steps.
 
-### 1. Submit Your Data
-Fill out our comprehensive form with your personal and medical information. Your data is protected with enterprise-grade encryption.
+### 1. Submit Patient Data
+Fill out our comprehensive form with patient history, current medications, tumor markers, and genetic profiles. Your data is protected with enterprise-grade encryption.
 
 [Start Assessment](#)
 
-### 2. AI Analysis
-Our system analyzes your data using advanced algorithms and clinical knowledge, identifying patterns that matter for your health.
+### 2. AI & Clinical Analysis
+Our system analyzes toxicity grades, metabolic readings, drug interactions, and mutation data together in one longitudinal record.
 
 [See How It Works](#)
 
-### 3. Get Recommendations
-Receive personalized health recommendations based on your unique profile, with actionable insights for better health outcomes.
+### 3. Get Surveillance Recommendations
+Receive structured clinical signals, escalation triggers, and trend alerts to guide between-visit care decisions.
 
 [View Dashboard](#)
 
-[Start Your Health Journey](#)
+[Start Your Clinical Journey](#)
 
-## Comprehensive Analysis: Key Features
-Our platform offers comprehensive health analysis through multiple factors to provide you with a complete picture of your health.
+## Comprehensive Monitoring: Key Features
+Our platform offers comprehensive surveillance through multiple factors to provide you with a complete picture of patient health.
 
-### Health Metrics Analysis
-Comprehensive analysis of your weight, height, BMI, and other vital health metrics to identify potential health risks and opportunities for improvement.
+### Onco-Metabolic Surveillance
+Tracks steroid-induced hyperglycemia, cachexia, and hydration against auditable thresholds through every cycle phase.
 
-[Track your metrics](#)
+[Track metrics](#)
 
-### Lifestyle Evaluation
-Assessment of your work habits, sleep patterns, and stress levels to provide holistic health recommendations tailored to your unique lifestyle.
+### CTCAE v5.0 Toxicity Grading
+Patients grade side effects the way the clinic does, with escalation triggers per term and an ECOG performance trend.
 
-[Get lifestyle insights](#)
+[View grading](#)
 
-### Medication Interaction
-Review of your current medications to identify potential interactions and optimize your treatment plan for better efficacy and reduced side effects.
+### Oncology Interaction Engine
+CYP450-aware screening across cytotoxics, TKIs, steroids, supportive care, and p53 rescue compounds.
 
-[Manage medications](#)
+[Check interactions](#)
 
-### AI Pharmacist
-Get personalized answers to your medication and health questions from our AI-powered pharmacist, backed by the latest medical research.
+### Markers & Liquid Biopsy
+CEA, CA 19-9, CA 125, PSA, AFP, LDH, and ctDNA VAF trended between scans with rise alerts.
 
-[Ask AI Pharmacist](#)
+[View markers](#)
+
+### Mutation-Aware from Oncyra
+Import a TP53 rescue prediction and MediSynic reweights metabolic risk domains and surveillance intensity.
+
+[Import predictions](#)
+
+### CRS & ICANS Monitoring
+CRP, ferritin, IL-6, and the 10-point ICE assessment for CAR-T and gene-editing patients.
+
+[Monitor CRS/ICANS](#)
 
 ## HIPAA & GDPR Compliant: Your Data Privacy & Security
 We take your privacy seriously with enterprise-grade security measures and full compliance with healthcare regulations.
@@ -102,33 +115,34 @@ Your health data is encrypted both in transit and at rest using industry-leading
 ### Regulatory Compliance
 Our platform is fully HIPAA and GDPR compliant, adhering to the highest standards of data protection.
 
-### User Consent Control
-You maintain full control over your data with granular consent options and the ability to delete your information anytime.
+### Clinical Decision Support Only
+MediSynic is not a medical device and does not replace the judgment of your oncology care team. Always confirm dosing, thresholds, and escalation with a clinician.
 
 [Learn More About Our Privacy Policy](#)
 
-## Ready to Transform Your Health Journey?
-Take the first step towards a healthier lifestyle with personalized recommendations tailored just for your unique needs.
+## Ready to Transform Your Oncology Surveillance?
+Take the first step towards structured between-visit monitoring for your patients in active cancer treatment.
 
 [Sign In / Sign Up](#)
 
 ---
 
 ## MediSynic
-Personalized health recommendations powered by advanced analytics and medical research. Making preventive healthcare accessible and actionable.
+Precision oncology and gene-therapy surveillance between clinic visits. Clinical decision support only — never a replacement for your oncology team.
 
 ### Quick Links
 *   Home
 *   About
-*   Health Assessment
+*   Oncology Intake
 *   Dashboard
-*   Recommendations
+*   Care Actions
+*   Oncyra Import
 *   Resources
-*   Health Articles
-*   FAQ
+*   CTCAE Grading
+*   Metabolic Monitor
 *   Privacy Policy
 *   Terms of Use
 *   Contact Us
 
 © 2026 MediSynic. All rights reserved.
-Made with ❤️ for better health
+Made with ❤️ for patients in active cancer treatment
