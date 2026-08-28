@@ -33,26 +33,6 @@ Create an account or sign in to unlock all oncology surveillance features and pe
 
 [Sign In / Sign Up](#)
 
-## Take Your Oncology Surveillance to the Next Level
-
-### Tier 1
-**Included with basic surveillance**
-*   ✓ Onco-metabolic & cachexia tracking
-*   ✓ Chemotherapy-induced hyperglycemia monitoring
-*   ✓ High-protein anti-cachexia nutrition support
-*   ✓ Nephrotoxicity-preventing hydration protocols
-[Get Started](#)
-
-### Recommended: Tier 2
-**$9.99/month**
-(Annual plan)
-*   ✓ ECOG and CTCAE grading
-*   ✓ Oncology DDI (drug-drug interaction) screening
-*   ✓ Tumor-marker response tracking
-*   ✓ Oncyra prediction import for TP53 mutations
-*   ✓ Export clinical reports
-[Start Free Trial](#)
-
 ## Simple Process: How MediSynic Works
 Our intelligent system analyzes patient data to generate tailored clinical recommendations in just a few steps.
 
