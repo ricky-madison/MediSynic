@@ -28,7 +28,7 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   
   // Only show header on non-dashboard pages
-  const appRoutes = ['/dashboard', '/form', '/recommendations', '/metabolic', '/toxicity', '/medications', '/markers', '/oncyra', '/cell-therapy', '/caregiver', '/user-data', '/privacy-policy', '/security-report', '/subscribe'];
+  const appRoutes = ['/dashboard', '/form', '/recommendations', '/metabolic', '/toxicity', '/medications', '/markers', '/oncyra', '/cell-therapy', '/caregiver', '/user-data', '/privacy-policy', '/security-report'];
   const isDashboardPage = appRoutes.some((r) => location.pathname.startsWith(r));
                           
   if (isDashboardPage && isAuthenticated) return null;
