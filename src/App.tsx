@@ -9,7 +9,7 @@ import { UserDataProvider } from "./context/UserDataContext";
 import { OncologyProvider } from "./context/OncologyContext";
 import { SidebarProvider } from "./components/ui/sidebar";
 import { AuthProvider, useAuth } from "./context/AuthContext";
-import DataConsentBanner from "./components/DataConsentBanner";
+
 import FloatingCTA from "./components/FloatingCTA";
 
 // Create a new query client with optimized settings for scale
@@ -148,7 +148,7 @@ const AppRoutes = () => {
       </Suspense>
       
       {shouldShowCTA && <FloatingCTA />}
-      <DataConsentBanner />
+      
     </div>
   );
 };
