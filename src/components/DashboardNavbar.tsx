@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Bell, Menu, Crown, User, ChevronDown, Settings } from 'lucide-react';
+import { Bell, Menu, User, ChevronDown, Settings } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { 
   DropdownMenu,
@@ -13,10 +13,9 @@ import { Button } from '@/components/ui/button';
 import { useAuth } from '@/context/AuthContext';
 import { useSidebar } from '@/components/ui/sidebar';
 import { useNavigate } from 'react-router-dom';
-import { Badge } from '@/components/ui/badge';
 
 const DashboardNavbar: React.FC = () => {
-  const { user, isPro, signOut } = useAuth();
+  const { user, signOut } = useAuth();
   const { state, toggleSidebar } = useSidebar();
   const isCollapsed = state === "collapsed";
   const navigate = useNavigate();
@@ -48,26 +47,6 @@ const DashboardNavbar: React.FC = () => {
 
         {/* Right side content */}
         <div className="ml-auto flex items-center space-x-4">
-          {/* Subscription status for quick visibility */}
-          {isPro ? (
-            <Badge 
-              variant="outline" 
-              className="hidden md:flex bg-amber-50 text-amber-700 border-amber-200 gap-1 items-center dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-800"
-            >
-              <Crown className="h-3 w-3" />
-              <span>Premium</span>
-            </Badge>
-          ) : (
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="hidden md:flex text-indigo-600 border-indigo-200 hover:bg-indigo-50 dark:text-indigo-400 dark:border-indigo-800 dark:hover:bg-indigo-900/30"
-              onClick={() => navigate('/subscribe')}
-            >
-              Upgrade
-            </Button>
-          )}
-
           {/* Notifications dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -140,10 +119,6 @@ const DashboardNavbar: React.FC = () => {
               <DropdownMenuItem className="cursor-pointer" onClick={() => handleNavigate('/user-data')}>
                 <User className="mr-2 h-4 w-4" />
                 Profile
-              </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer" onClick={() => handleNavigate('/subscribe')}>
-                <Crown className="mr-2 h-4 w-4" />
-                Subscription
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="cursor-pointer text-red-500" onClick={() => signOut()}>

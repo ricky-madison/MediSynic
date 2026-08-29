@@ -16,7 +16,6 @@ import {
 } from '@/components/ui/sidebar';
 import { useAuth } from '@/context/AuthContext';
 import { useOncology } from '@/context/OncologyContext';
-import SubscriptionBadge from './SubscriptionBadge';
 import {
   Activity,
   AlertCircle,
@@ -41,11 +40,10 @@ interface NavItem {
   icon: React.ElementType;
   label: string;
   to: string;
-  requiresPro?: boolean;
 }
 
 const AppSidebar = () => {
-  const { user, isAuthenticated, signOut, isPro } = useAuth();
+  const { user, isAuthenticated, signOut } = useAuth();
   const { patient } = useOncology();
   const location = useLocation();
   const { state } = useSidebar();
@@ -67,7 +65,7 @@ const AppSidebar = () => {
   const precision: NavItem[] = [
     { icon: Dna, label: 'Oncyra import', to: '/oncyra' },
     { icon: Brain, label: 'CRS & ICANS', to: '/cell-therapy' },
-    { icon: Users, label: 'Care circle', to: '/caregiver', requiresPro: true },
+    { icon: Users, label: 'Care circle', to: '/caregiver' },
   ];
 
   const governance: NavItem[] = [
@@ -82,11 +80,10 @@ const AppSidebar = () => {
       <SidebarGroupContent>
         <SidebarMenu>
           {items.map((item) => {
-            const locked = item.requiresPro && !isPro;
             return (
               <SidebarMenuItem key={item.to}>
                 <SidebarMenuButton asChild isActive={location.pathname === item.to} tooltip={item.label}>
-                  <Link to={locked ? '/subscribe' : item.to} className="flex justify-center md:justify-start">
+                  <Link to={item.to} className="flex justify-center md:justify-start">
                     <item.icon size={18} />
                     <span>{item.label}</span>
                   </Link>
@@ -137,7 +134,6 @@ const AppSidebar = () => {
                 {!isCollapsed && (
                   <div className="flex flex-col">
                     <span className="max-w-[120px] truncate text-sm font-medium">{user?.email}</span>
-                    <SubscriptionBadge className="mt-1 px-1.5 py-0.5" />
                   </div>
                 )}
               </div>

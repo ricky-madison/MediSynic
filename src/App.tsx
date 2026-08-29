@@ -41,7 +41,6 @@ const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const SecurityReport = lazy(() => import("./pages/SecurityReport"));
 const UserData = lazy(() => import("./pages/UserData"));
 const Auth = lazy(() => import("./pages/Auth"));
-const Subscribe = lazy(() => import("./pages/Subscribe"));
 
 // App layout components
 const AppSidebar = lazy(() => import("./components/AppSidebar"));
@@ -102,7 +101,7 @@ const AppRoutes = () => {
   const { isAuthenticated } = useAuth();
   
   // Define routes where the CTA should not appear
-  const excludedRoutes = ['/form', '/dashboard', '/auth', '/subscribe', '/metabolic', '/toxicity', '/medications', '/markers', '/oncyra', '/cell-therapy', '/recommendations'];
+  const excludedRoutes = ['/form', '/dashboard', '/auth', '/metabolic', '/toxicity', '/medications', '/markers', '/oncyra', '/cell-therapy', '/recommendations'];
   const shouldShowCTA = !excludedRoutes.some(route => location.pathname.startsWith(route)) && !isAuthenticated;
   
   return (
@@ -139,7 +138,6 @@ const AppRoutes = () => {
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/security-report" element={<SecurityReport />} />
             <Route path="/user-data" element={<UserData />} />
-            <Route path="/subscribe" element={<Subscribe />} />
           </Route>
 
           {/* Catch-all route */}

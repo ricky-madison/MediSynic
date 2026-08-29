@@ -3,34 +3,25 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "./button"
-import ProFeatureLock from "../ProFeatureLock"
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   withAction?: boolean
   actionLabel?: string
   onAction?: () => void
-  isPro?: boolean
-  proFeatureLabel?: string
 }
 
 const Card = React.forwardRef<
   HTMLDivElement,
   CardProps
->(({ className, withAction, actionLabel, onAction, isPro, proFeatureLabel, ...props }, ref) => (
+>(({ className, withAction, actionLabel, onAction, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
       "rounded-lg border bg-card text-card-foreground shadow-sm",
-      isPro && "relative",
       className
     )}
     {...props}
   >
-    {isPro && (
-      <div className="absolute -top-2 right-2">
-        <ProFeatureLock feature={proFeatureLabel || "Pro Feature"} />
-      </div>
-    )}
     {props.children}
   </div>
 ))
